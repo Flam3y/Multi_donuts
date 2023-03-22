@@ -6,7 +6,7 @@ import os
 
 class Donut:
 
-	def __init__(self, count=1, color="rgb(255,255,255)"):
+	def __init__(self, count=1, color="rgb(255,255,255)", speed=1, symbolGradient=".:!/r(l1Z4H9W8$@"):
 		os.system('')
 
 		self.colors = []
@@ -23,14 +23,21 @@ class Donut:
 		else:
 			self.colors.append(color)
 
+		if len(symbolGradient) < 12:
+			raise ValueError("Symbol gradient must have more than 11 symbols!")
+
+		if speed <= 0:
+			raise ValueError("Speed must be granter than 0")
+		else:
+			self.speed = speed
+
 		self.frame = 0
 
 		self.count = count
 		self.screen_size = int(42*((2-int(self.count == 1))/self.count))
-		print(self.screen_size)
 		self.theta_spacing = 0.07
 		self.phi_spacing = 0.02
-		self.illumination = np.fromiter(".:!/r(l1Z4H9W8$@", dtype="<U1")
+		self.illumination = np.fromiter(symbolGradient, dtype="<U1")
 
 		self.fps = 1000 / 60
 
@@ -92,8 +99,8 @@ class Donut:
 
 	def start(self):
 		while True:
-			self.A += self.theta_spacing
-			self.B += self.phi_spacing
+			self.A += self.theta_spacing*self.speed
+			self.B += self.phi_spacing*self.speed
 			print("\x1b[H")
 
 			fr = self.render_frame(self.A, self.B)
@@ -104,6 +111,6 @@ class Donut:
 
 
 if __name__ == "__main__":
-	donut = Donut(1, "rainbow")
+	donut = Donut(1, "rainbow", speed=1)
 	donut.start()
 
