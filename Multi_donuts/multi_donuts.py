@@ -1,5 +1,6 @@
 import numpy as np
 from time import time, sleep
+import random
 import colors
 import os
 
@@ -20,9 +21,10 @@ class Donut:
 
 			for i in range(0, 256, 3):
 				self.colors.append(f'rgb({i}, {255 - i}, 0)')
+		elif color=="random":
+			self.colors.append(f"rgb({random.randint(0,255)},{random.randint(0,255)},{random.randint(0,255)})")
 		else:
-			self.colors.append(color)
-
+			slef.colors.apend(color)
 		if len(symbolGradient) < 12:
 			raise ValueError("Symbol gradient must have more than 11 symbols!")
 
@@ -111,6 +113,6 @@ class Donut:
 
 
 if __name__ == "__main__":
-	donut = Donut(1, "rainbow", speed=1)
+	donut = Donut(1, "random", speed=1)
 	donut.start()
 
